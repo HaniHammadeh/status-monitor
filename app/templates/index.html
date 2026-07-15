@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Status Monitor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">status://</span>
+      <span class="brand-name">monitor</span>
+    </div>
+    <div class="live-indicator">
+      <span class="pulse-dot" aria-hidden="true"></span>
+      <span>live &middot; refreshes every 8s</span>
+    </div>
+  </header>
+
+  <main class="content">
+    <section class="toolbar">
+      <div>
+        <h1>Services</h1>
+        <p class="subtitle" id="summary-line">Loading services&hellip;</p>
+      </div>
+      <button id="toggle-form-btn" class="btn btn-primary" type="button">+ Add service</button>
+    </section>
+
+    <form id="add-service-form" class="add-form hidden">
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" placeholder="Payments API" required />
+      </div>
+      <div class="field field-wide">
+        <label for="url">URL</label>
+        <input id="url" name="url" type="text" placeholder="https://example.com/health" required />
+      </div>
+      <div class="field field-narrow">
+        <label for="method">Method</label>
+        <select id="method" name="method">
+          <option>GET</option>
+          <option>POST</option>
+          <option>HEAD</option>
+        </select>
+      </div>
+      <div class="field field-narrow">
+        <label for="expected_status">Expected</label>
+        <input id="expected_status" name="expected_status" type="number" value="200" required />
+      </div>
+      <div class="field field-narrow">
+        <label for="check_interval_seconds">Interval (s)</label>
+        <input id="check_interval_seconds" name="check_interval_seconds" type="number" value="60" required />
+      </div>
+      <div class="field field-actions">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" id="cancel-form-btn" class="btn btn-ghost">Cancel</button>
+      </div>
+    </form>
+
+    <section id="empty-state" class="empty-state hidden">
+      <p>No services yet.</p>
+      <p class="subtitle">Add one above to start monitoring it.</p>
+    </section>
+
+    <section id="service-grid" class="service-grid"></section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
