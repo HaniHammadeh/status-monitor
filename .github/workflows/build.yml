@@ -1,0 +1,41 @@
+name: Build Container
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "app/main.py"
+      - "Dockerfile"
+      - "requirements.txt"
+
+jobs:    
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate short commit
+        run: |
+          echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - run: pip install -r requirements.txt
+      - run: | 
+          docker build \
+                --build-arg VERSION=${{ github.sha }} \
+                --build-arg COMMIT=${{ env.SHORT_SHA }} \
+                --build-arg BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") \
+                -t hanihammadeh/status-monitor:${{ github.sha }} .
+
+      - run: docker push hanihammadeh/status-monitor:${{ github.sha }}
+  
