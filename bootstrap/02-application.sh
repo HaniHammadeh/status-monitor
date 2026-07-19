@@ -56,12 +56,30 @@ ok "Image pushed"
 ###########################################
 # Deploy application
 ###########################################
+info "Deploying PostgreSQL..."
+kubectl apply -f k8s/base/postgres/
 
-info "Deploying application..."
+kubectl rollout status deployment/postgres -n dev
 
-kubectl apply -f "$DEV_MANIFESTS"
+info "Deploying Redis..."
+kubectl apply -f k8s/base/redis/
 
-###########################################
+kubectl rollout status deployment/redis -n dev
+
+info "Deploying ConfigMap..."
+kubectl apply -f k8s/base/config/
+
+info "Deploying API..."
+kubectl apply -f k8s/base/api/
+
+kubectl rollout status deployment/api -n dev
+
+info "Deploying Worker..."
+kubectl apply -f k8s/base/worker/
+
+info "Deploying Beat..."
+kubectl apply -f k8s/base/beat/
+
 # Wait
 ###########################################
 
