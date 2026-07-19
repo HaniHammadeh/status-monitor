@@ -59,7 +59,7 @@ ok "Image pushed"
 info "Deploying PostgreSQL..."
 kubectl apply -f k8s/base/postgres/
 
-kubectl rollout status deployment/postgres -n dev
+#kubectl rollout status deployment/postgres -n dev
 
 info "Deploying Redis..."
 kubectl apply -f k8s/base/redis/
@@ -67,7 +67,7 @@ kubectl apply -f k8s/base/redis/
 kubectl rollout status deployment/redis -n dev
 
 info "Deploying ConfigMap..."
-kubectl apply -f k8s/base/config/
+#kubectl apply -f k8s/base/config/
 
 info "Deploying API..."
 kubectl apply -f k8s/base/api/
@@ -83,9 +83,9 @@ kubectl apply -f k8s/base/beat/
 # Wait
 ###########################################
 
-kubectl rollout status deployment/${APP_NAME} \
-    -n ${DEV_NAMESPACE} \
-    --timeout=180s
+#kubectl rollout status deployment/${APP_NAME} \
+#    -n ${DEV_NAMESPACE} \
+#    --timeout=180s
 
 ok "Deployment successful"
 
