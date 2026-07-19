@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: dev
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: worker
+
+  template:
+    metadata:
+      labels:
+        app: worker
+
+    spec:
+
+      containers:
+
+        - name: worker
+          image: hanihammadeh/status-monitor:initial
+
+          command:
+            - celery
+
+          args:
+            - -A
+            - app.celery_app
+            - worker
+            - --loglevel=info
+
+
+          env:
+            - name: DATABASE_URL
+              value: postgresql://statususer:statuspass@db:5432/statusdb
+
+            - name: REDIS_URL
+              value: redis://redis:6379/0
+

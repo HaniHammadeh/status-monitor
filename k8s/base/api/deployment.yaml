@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: dev
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: api
+
+  template:
+    metadata:
+      labels:
+        app: api
+
+    spec:
+
+      containers:
+
+        - name: api
+          image: hanihammadeh/status-monitor:initial
+
+          ports:
+            - containerPort: 8000
+
+          env:
+            - name: DATABASE_URL
+              value: postgresql://statususer:statuspass@db:5432/statusdb
+
+            - name: REDIS_URL
+              value: redis://redis:6379/0
