@@ -83,9 +83,9 @@ kubectl apply -f k8s/base/beat/
 # Wait
 ###########################################
 
-#kubectl rollout status deployment/${APP_NAME} \
-#    -n ${DEV_NAMESPACE} \
-#    --timeout=180s
+kubectl rollout status deployment/${APP_NAME}-api \
+    -n ${DEV_NAMESPACE} \
+    --timeout=180s
 
 ok "Deployment successful"
 
