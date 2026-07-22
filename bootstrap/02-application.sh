@@ -93,7 +93,7 @@ ok "Deployment successful"
 # Health Check
 ###########################################
 
-SERVICE_IP=$(kubectl get svc ${APP_NAME} \
+SERVICE_IP=$(kubectl get svc ${APP_NAME}-api \
     -n ${DEV_NAMESPACE} \
     -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
