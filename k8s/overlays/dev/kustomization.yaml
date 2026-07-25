@@ -1,0 +1,12 @@
+resources:
+  - ../../base/api
+  - ../../base/worker
+  - ../../base/beat
+  - ../../base/postgres
+  - ../../base/redis
+
+namespace: dev
+
+images:
+  - name: hanihammadeh/status-monitor
+    newTag: initial

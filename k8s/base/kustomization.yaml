@@ -1,0 +1,8 @@
+resources:
+  - api
+  - worker
+  - beat
+  - postgres
+  - redis
+  - config
+  - scheduler

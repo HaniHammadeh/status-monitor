@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api
-  namespace: dev
 
 spec:
   replicas: 2
@@ -21,7 +20,7 @@ spec:
       containers:
 
         - name: api
-          image: hanihammadeh/status-monitor:initial
+          image: hanihammadeh/status-monitor
 
           ports:
             - containerPort: 8000
