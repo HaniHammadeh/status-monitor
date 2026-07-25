@@ -38,4 +38,27 @@ jobs:
                 -t hanihammadeh/status-monitor:${{ github.sha }} .
 
       - run: docker push hanihammadeh/status-monitor:${{ github.sha }}
+
+  deploy_on_dev:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: check out
+        uses: actions/checkout@v4
+      - name: Deploy image to dev
+        run: |
+          kubectl set image deployment/api \
+            api=hanihammadeh/status-monitor:${{ github.sha}} \
+            -n dev
+
+      - name: Wait for rollout
+        run: |
+          kubectl rollout status deployment/api \
+            -n dev \
+            --timeout=120s
+
+      - name: Show deployment
+        run: |
+          kubectl get pods -n dev
+  
   
