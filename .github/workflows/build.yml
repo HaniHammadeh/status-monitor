@@ -10,9 +10,32 @@ on:
       - "Dockerfile"
       - "requirements.txt"
 
-jobs:    
+jobs:
+  scan:
+    runs-on:
+      - self-hosted
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Scan repository with gitleaks
+        run: |
+          gitleaks -v detect --config .gitleaks.toml
+  semgrep:
+    runs-on: self-hosted
+    needs: scan
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Semgrep
+        run: |
+          semgrep scan --config=p/security-audit    
   build:
     runs-on: ubuntu-latest
+    needs: [scan, semgrep]
     steps:
       -
         name: Login to Docker Hub
