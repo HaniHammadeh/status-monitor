@@ -60,10 +60,7 @@ kubectl apply -k k8s/overlays/dev
 kubectl rollout status deployment/redis -n dev
 kubectl rollout status deployment/api -n dev
 
-info "Deploying Beat..."
-kubectl apply -f k8s/base/beat/
 
-# Wait
 ###########################################
 
 #kubectl rollout status deployment/${APP_NAME}-api \
@@ -86,3 +83,13 @@ echo
 echo "URL:"
 echo
 echo "http://${SERVICE_IP}"
+
+kubectl apply -k k8s/overlays/staging   
+kubectl rollout status deployment/redis -n staging
+kubectl rollout status deployment/api -n staging
+# Wait
+
+kubectl apply -k k8s/overlays/prod
+kubectl rollout status deployment/redis -n prod
+kubectl rollout status deployment/api -n prod
+
