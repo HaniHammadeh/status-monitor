@@ -92,7 +92,7 @@ def metrics(db: Session = Depends(get_db)):
 @app.get("/version")
 def version():
     return {
-        "application": "color-app",
+        "application": "status-monitor",
         "version": os.getenv("APP_VERSION", "unknown"),
         "commit": os.getenv("GIT_COMMIT", "unknown"),
         "build_date": os.getenv("BUILD_DATE", "unknown"),

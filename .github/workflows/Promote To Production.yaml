@@ -16,9 +16,9 @@ jobs:
         run: |
           kubectl set image deployment/api \
             api=hanihammadeh/status-monitor:${{github.event.inputs.image_tag}} \
-            -n production
+            -n prod
 
       - name: Wait for rollout
         run: |
           kubectl rollout status deployment/api \
-            -n production
+            -n prod
