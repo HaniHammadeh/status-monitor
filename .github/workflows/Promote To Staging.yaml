@@ -15,10 +15,10 @@ jobs:
       - name: Deploy
         run: |
           kubectl set image deployment/api \
-            color-app=hanihammadeh/web-app:${{github.event.inputs.image_tag}} \
+            api=hanihammadeh/status-monitor:${{github.event.inputs.image_tag}} \
             -n staging
 
       - name: Wait for rollout
         run: |
-          kubectl rollout status deployment/color-app \
+          kubectl rollout status deployment/api \
             -n staging
