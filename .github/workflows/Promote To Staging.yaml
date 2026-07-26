@@ -1,0 +1,24 @@
+name: Promote to Staging
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: Image tag to deploy
+        required: true
+
+jobs:
+  promote:
+    environment: staging
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy
+        run: |
+          kubectl set image deployment/api \
+            color-app=hanihammadeh/web-app:${{github.event.inputs.image_tag}} \
+            -n staging
+
+      - name: Wait for rollout
+        run: |
+          kubectl rollout status deployment/color-app \
+            -n staging

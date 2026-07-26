@@ -45,20 +45,20 @@ jobs:
     steps:
       - name: check out
         uses: actions/checkout@v4
-      - name: Deploy image to dev
+      - name: Deploy image to Staging
         run: |
           kubectl set image deployment/api \
             api=hanihammadeh/status-monitor:${{ github.sha}} \
-            -n dev
+            -n staging
 
       - name: Wait for rollout
         run: |
           kubectl rollout status deployment/api \
-            -n dev \
+            -n staging \
             --timeout=120s
 
       - name: Show deployment
         run: |
-          kubectl get pods -n dev
+          kubectl get pods -n staging
   
   
