@@ -12,6 +12,7 @@ on:
 
 jobs:
   scan:
+    environment: dev
     runs-on:
       - ubuntu-latest
 
@@ -22,6 +23,7 @@ jobs:
 
       - name: Scan repository with gitleaks
         run: |
+          export GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
           python3 -m pip install google-genai
           chmod +x security_review.py
           python3 security_review.py app/main.py
