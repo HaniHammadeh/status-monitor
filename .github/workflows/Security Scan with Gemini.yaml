@@ -27,3 +27,9 @@ jobs:
           python3 -m pip install google-genai
           chmod +x security_review.py
           python3 security_review.py app/main.py
+      - name: Upload Security Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-report
+          path: security-report.md
+          retention-days: 30
